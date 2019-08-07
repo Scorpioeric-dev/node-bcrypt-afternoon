@@ -56,8 +56,7 @@ export default class Header extends Component {
   }
 
   logout() {
-    // axios GET to /auth/logout here
-
+//axios get to auth/logout 
     axios
       .get("/auth/logout")
       .then(() => {
