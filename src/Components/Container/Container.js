@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
-import axios from 'axios';
-import './Container.css';
-import Treasure from '../Treasure';
+import React, { Component } from "react";
+import axios from "axios";
+import "./Container.css";
+import Treasure from "../Treasure";
 
 export default class Container extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      treasures: {},
+      treasures: {}
     };
     this.addMyTreasure = this.addMyTreasure.bind(this);
   }
@@ -19,30 +19,39 @@ export default class Container extends Component {
   }
 
   getDragonTreasure() {
-    axios.get('/api/treasure/dragon').then(treasure => {
-      this.setState({
-        treasures: {
-          ...this.state.treasures,dragon:treasure.data
-        }
+    axios
+      .get("/api/treasure/dragon")
+      .then(treasure => {
+        this.setState({
+          treasures: {
+            ...this.state.treasures,
+            dragon: treasure.data
+          }
+        });
       })
-    })
-    .catch(err => console.log(err))
-    
+      .catch(err => console.log(err));
   }
 
   getAllTreasure() {
-    // axios GET to /api/treasure/all here
+    axios.get("/api/treasure/all").then(treasure=> {
+      this.setState({
+        treasures: { ...this.state.treasures, all: treasure.data }
+      });
+    });
   }
 
   getMyTreasure() {
-    axios.get('/api/treasure/user').then(treasure => {
-      this.setState({
-        treasures: {
-          ...this.state.treasures,user:treasure.data
-        }
+    axios
+      .get("/api/treasure/user")
+      .then(treasure => {
+        this.setState({
+          treasures: {
+            ...this.state.treasures,
+            user: treasure.data
+          }
+        });
       })
-    })
-    .catch(err => alert(err.response.request.response))
+      .catch(err => alert(err.response.request.response));
     // axios GET to /api/treasure/user here
   }
 
@@ -50,8 +59,8 @@ export default class Container extends Component {
     this.setState({
       treasures: {
         ...this.state.treasures,
-        user: newMyTreasure,
-      },
+        user: newMyTreasure
+      }
     });
   }
 
@@ -70,7 +79,10 @@ export default class Container extends Component {
             <button className="title" onClick={() => this.getDragonTreasure()}>
               See Dragon's <br /> Treasure
             </button>
-            <p>This treasure trove does not require a user to be logged in for access</p>
+            <p>
+              This treasure trove does not require a user to be logged in for
+              access
+            </p>
           </div>
         )}
         {user && username ? (
@@ -83,10 +95,16 @@ export default class Container extends Component {
           </div>
         ) : (
           <div className="treasureBox">
-            <button className="title" onClick={() => this.getMyTreasure()} name="user">
+            <button
+              className="title"
+              onClick={() => this.getMyTreasure()}
+              name="user"
+            >
               See My <br /> Treasure
             </button>
-            <p>This treasure trove requires a user to be logged in for access</p>
+            <p>
+              This treasure trove requires a user to be logged in for access
+            </p>
           </div>
         )}
         {all && username ? (
@@ -96,10 +114,17 @@ export default class Container extends Component {
           </div>
         ) : (
           <div className="treasureBox">
-            <button className="title" onClick={() => this.getAllTreasure()} name="all">
+            <button
+              className="title"
+              onClick={() => this.getAllTreasure()}
+              name="all"
+            >
               See All <br /> Treasure
             </button>
-            <p>This treasure trove requires a user to be a logged in as an admin user for access</p>
+            <p>
+              This treasure trove requires a user to be a logged in as an admin
+              user for access
+            </p>
           </div>
         )}
       </div>
